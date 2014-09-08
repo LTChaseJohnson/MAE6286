@@ -35,4 +35,36 @@ plt.plot(t,z)
 plt.plot(t,z_e)
 plt.legend(['Numerical Solution','Analytical Solution'])
 plt.title('step size = %s' %dt)
+
+dt_values = np.array([0.1,0.05,0.01,0.005,0.001,0.0001])
+z_values = np.empty_like(dt_values, dtype=np.ndarray)
+
+for i, dt in enumerate(dt_values):
+    u = np.array([z0,v])
+    z = np.empty_like(t)
+    z[0] = z0
+    
+    for n in range(1,S):
+        u = u + dt*np.array([u[1], g*(1-u[0]/zt)])
+        z[n] = u[0]
+        
+    z_values[i] = z.copy()
+
+def get_error(z,dt):
+    N = len(z)
+    t = np.linspace(0.0,T,N)
+    z_exact = v*(zt/g)**.5*np.sin((g/zt)**.5*t)+(z0-zt)*np.cos((g/zt)**.5*t)+zt
+    return dt*np.sum(np.abs(z-z_exact))
+    
+error_values = np.empty_like(dt_values)
+for i, dt in enumerate(dt_values):
+    error_values[i] = get_error(z_values[i],dt)
+
+plt.figure(figsize=(10,4))
+plt.grid(True)
+plt.xlabel('$\Delta t$', fontsize = 16)
+plt.ylabel('Error', fontsize =16)
+plt.loglog(dt_values, error_values, 'ko-')
+plt.axis('equal')
+
 plt.show()
