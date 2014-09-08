@@ -16,7 +16,7 @@ g = 9.81                                   #Acceleration
 
 u = np.array([z0,v])                    #Creates initial condition vector
 
-z = np.zeros(S)                   #Creates an empty vector to store values
+z = np.zeros(S)                         #Creates an empty vector to store values
 z[0] = z0                               #Sets initial height condition
 
 #Steppin' with Euler!
@@ -39,7 +39,7 @@ plt.title('step size = %s' %dt)
 dt_values = np.array([0.1,0.05,0.01,0.005,0.001,0.0001])
 z_values = np.empty_like(dt_values, dtype=np.ndarray)
 
-for i, dt in enumerate(dt_values):
+for i, dt in enumerate(dt_values):                   #Not a clue!!!
     N = int(T/dt)+1
     t = np.linspace(0.0,T,N)
     u = np.array([z0,v])
