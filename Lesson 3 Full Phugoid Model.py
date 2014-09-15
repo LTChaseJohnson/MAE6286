@@ -83,5 +83,7 @@ plt.ylabel('$L_1$-norm of the grid differences',fontsize=18)
 plt.axis('equal')
 plt.loglog(dt_values[:-1],diffgrid[:-1],marker='o')
 
+#Calculating order of convergence
+
 
 plt.show()
