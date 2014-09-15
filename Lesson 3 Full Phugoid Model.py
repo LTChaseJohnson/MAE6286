@@ -50,7 +50,18 @@ plt.ylabel(r'y',fontsize=18)
 plt.plot(x,y,'k-')
 plt.title('Glider Trajectory, Flight Time = %.2f' %T,fontsize=18)
 
-'''print u[:,2]
-print u[:,3]'''
+#Evaluating Convergence
+dt_values = np.array([0.1,0.05,0.01,0.005,0.001])    #An array of different dt values
+u_values = np.empty_like(dt_values,dtype=np.ndarray) #Creates u array of same size
+
+for i, dt in enumerate(dt_values):                  #For each index#,dt data pair
+    N = int(T/dt) + 1                                #Each dt will now have a different time step
+    t=np.linspace(0.0,T,N)
+    u=np.empty((N,4))
+    u[0]=np.array([v0,theta0,x0,y0])
+    for n in range(N-1):
+        u[n+1] = euler_step(u[n],f,dt)
+    u_values[i] = u
+
 
 plt.show()
