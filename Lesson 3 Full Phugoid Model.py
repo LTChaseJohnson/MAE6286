@@ -63,5 +63,14 @@ for i, dt in enumerate(dt_values):                  #For each index#,dt data pai
         u[n+1] = euler_step(u[n],f,dt)
     u_values[i] = u
 
+#Pulling corresponding values from different grid meshes
+def get_diffgrid(u_current, u_fine, dt):
+    N_current = len(u_current[:,0])
+    N_fine = len(u_fine[:,0])
+    grid_size_ratio = ceil(N_fine/float(N_current))
+    diffgrid = dt*np.sum(np.abs(u_current[:,2]-u_fine[::grid_size_ratio,2]))
+    return diffgrid
+
+
 
 plt.show()
