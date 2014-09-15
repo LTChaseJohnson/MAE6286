@@ -71,6 +71,17 @@ def get_diffgrid(u_current, u_fine, dt):
     diffgrid = dt*np.sum(np.abs(u_current[:,2]-u_fine[::grid_size_ratio,2]))
     return diffgrid
 
+diffgrid = np.empty_like(dt_values)             #Creates new grid same size as dt_values
+for i, dt in enumerate(dt_values):
+    print('dt = {}'.format(dt))
+    diffgrid[i]=get_diffgrid(u_values[i],u_values[-1],dt)
+    
+plt.figure(figsize=(6,6))
+plt.grid(True)
+plt.xlabel('$\Delta t$',fontsize=18)
+plt.ylabel('$L_1$-norm of the grid differences',fontsize=18)
+plt.axis('equal')
+plt.loglog(dt_values[:-1],diffgrid[:-1],marker='o')
 
 
 plt.show()
