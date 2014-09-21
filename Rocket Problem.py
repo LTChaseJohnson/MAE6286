@@ -14,7 +14,7 @@ mp0 = 100.       #Initial fuel mass
 h0 = 0.          #Initial height
 v0 = 0.          #Initial velocity
 
-T = 37.33
+T = 50.
 dt = 0.1
 N = int(T/dt)+1
 t = np.linspace(0.0,T,N)
@@ -36,7 +36,8 @@ def euler_step(u, f, dt):
 
 for n in range(N-1):
     u[n+1] = euler_step(u[n],f,dt)
-        
+    if u[n+1,0]<0:
+        break     
 
 h = u[:,0]
 v = u[:,1]
