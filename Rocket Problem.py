@@ -14,7 +14,7 @@ mp0 = 100       #Initial fuel mass
 h0 = 0          #Initial height
 v0 = 0          #Initial velocity
 
-T = 100.0
+T = 37.33
 dt = 0.1
 N = int(T/dt)+1
 t = np.linspace(0.0,T,N)
@@ -22,22 +22,29 @@ t = np.linspace(0.0,T,N)
 mp_dot = np.piecewise(t,[t<5,t>=5],[20,0])  #Defines piecewise function mp_dot
 mp = np.piecewise(t,[t<5,t>=5],[lambda t: mp0-20*t, lambda t: 0])
 
-def f(u):
-    h = u[0]
-    v = u[1]
-    return np.array([v,-g+(mp_dot*ve)/(ms+mp)-(rho*A*Cd*v**2)/(2*(ms+mp))])
-
-def euler_step(u,f,dt):
-    return u + dt * f(u)
 
 u = np.empty((N,2))
 u[0] = np.array([h0,v0])
 
+def f(u):
+    h = u[0]
+    v = u[1]
+    return np.array([v,-g+(mp_dot[n]*ve)/(ms+mp[n])-(rho*A*Cd*v**2)/(2*(ms+mp[n]))])
+
+def euler_step(u, f, dt):
+    return u + dt * f(u)
+
 for n in range(N-1):
     u[n+1] = euler_step(u[n],f,dt)
+        
 
 h = u[:,0]
 v = u[:,1]
 
+
+print 'h = ',h
+
 plt.plot(t,h)
+plt.plot(t,v)
+plt.ylim(0.0,1500)
 plt.show()
