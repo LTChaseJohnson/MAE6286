@@ -59,4 +59,7 @@ print 'Crash Velocity: ',v[tcrash]
 plt.plot(t,h)
 plt.plot(t,v)
 plt.ylim(-90,1350)
+plt.title('Rocket Position and Velocity')
+plt.ylabel('Rocket Velocity $m/s$, Rocket Position $m$')
+plt.xlabel('Time $s$')
 plt.show()
