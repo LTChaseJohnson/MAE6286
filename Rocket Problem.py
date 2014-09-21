@@ -49,9 +49,9 @@ maxh = max(h)
 print 'Fuel Remaining: ',mp[3.2]
 print 'Maximum Velocity: ',maxv
 print 'Height at max V: ',h[50]
-print 'Maximum Height: ',(maxh+1)/10.
-print 'Max Height time: ',(tmaxh+1)/10.
-print 'Time of Flight: ',tcrash
+print 'Maximum Height: ',(maxh+1)
+print 'Max Height time: ',(tmaxh+1)
+print 'Time of Flight: ',tcrash+1./10.
 print 'Crash Velocity: ',v[tcrash]
 
 
