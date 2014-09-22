@@ -54,4 +54,15 @@ u_modeuler[0] = np.array([v0,theta0,x0,y0])
 #Running the Loop!
 for n in range(N-1):
     u_euler[n+1] = eulerstep(u_euler[n],f,dt)
+    if u_euler[n+1]<0.0:
+        break
     u_modeuler[n+1] = modeulerstep(u_modeuler[n],f,dt)
+    if u_modeuler[n+1]<0.0:
+        break
+
+x_euler = u_euler[:,2]
+y_euler = u_euler[:,3]
+
+x_modeuler = u_modeuler[:,2]
+y_modeuler = u_modeuler[:,3]
+
