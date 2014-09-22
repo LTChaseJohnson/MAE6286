@@ -9,8 +9,8 @@ Cd = 1/5.0          #Drag coefficient
 Cl = 1.0            #Lift coefficient
 
 #Initial Conditions:
-v0 = 6.5            #Initial velocity (m/s)
-theta0 = -0.1       #Initial angle (radians)
+v0 = 16.            #Initial velocity (m/s)
+theta0 = -1.       #Initial angle (radians)
 x0 = 0.0            #Initial x position (m)
 y0 = 2.0            #Initial y position (m)
 
@@ -88,7 +88,7 @@ plt.plot(x_modeuler,y_modeuler,'r--',label='Modified Euler')
 plt.plot(x_cd,y_cd,'b-.',label='Centered Difference')
 plt.xlim(x0,x_euler[crash_index]+1)
 plt.legend(loc='best')
-plt.ylim(0,2.5)
+plt.ylim(0,max(y_euler)+1)
 
 #Calculating multiple solutions with different dt
 dt_values = np.array([0.1,0.05,0.01,0.005,0.001])
