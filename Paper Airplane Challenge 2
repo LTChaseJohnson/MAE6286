@@ -1,0 +1,58 @@
+from math import *
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+g = 9.8                 #Gravitational acceleration
+v_t = 4.9               #Trim velocity
+C_D = 5.                #Drag Coefficient
+C_L = 1.                #Lift Coefficient
+
+# Initial Conditions
+v0 = 0.001              #Initial velocity
+theta0 = -pi/2          #Initial trajectory
+x0 = 0.                 #Horizontal start point
+y0 = 2.                 #Initial altitude
+v_iter = np.linspace(v0,20.,100)
+theta_iter = np.linspace(theta0,pi/2,10)
+sol_mat = [0.,0.,0.,0.] #Solution Matrix
+
+def f(u):               #Creates system of equations u'(t)=f(u)
+    v = u[0]
+    theta = u[1]
+    x = u[2]
+    y = u[3]
+    return np.array([-g*np.sin(theta)-(C_D/C_L)*(g/v_t**2)*v**2,
+                     -(g/v)*np.cos(theta)+(g/v_t**2)*v,
+                     v*np.cos(theta),
+                     v*np.sin(theta)])
+                     
+def euler_step(u,f,dt):
+    return u + dt*f(u)
+
+T = 45                #Final time
+dt = input('Enter time step: ')
+N = int(T/dt) + 1        #Number of time steps
+t = np.linspace(0.0,T,N)
+
+u = np.empty((N,4))                   #Empty matrix of N columns and 4 rows for system of equation
+u[0] = np.array([v0,theta0,x0,y0])    #First column is initial conditions
+
+for v0 in v_iter:
+    for theta0 in theta_iter:
+        for n in range(N-1):
+            u[n+1]=euler_step(u[n],f,dt)
+            if u[n+1,3]<=0:
+                if u[n+1,2]>sol_mat[2]:
+                    print u[n+1,3]
+                    sol_mat[0]=u[n+1,0]
+                    sol_mat[1]=u[n+1,1]
+                    sol_mat[2]=u[n+1,2]
+                    sol_mat[3]=u[n+1,3]
+                    break
+                break
+            
+
+
+                    
+print sol_mat
