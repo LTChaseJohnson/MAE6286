@@ -87,11 +87,13 @@ for i, dt in enumerate(dt_values):
     e[0] = [v0,theta0,x0,y0]
     mod_e = np.empty((N,4))
     mod_e[0] = [v0,theta0,x0,y0]
-
-for n in range(N-1):
-    e[n+1] = eulerstep(e[n],f,dt)
-    mod_e[n+1] = modeulerstep(mod_e[n],f,dt)
-
+    
+    for n in range(N-1):
+        e[n+1] = eulerstep(e[n],f,dt)
+        mod_e[n+1] = modeulerstep(mod_e[n],f,dt)
+    
+    eu_values[i] = e
+    mod_eu_values[i] = mod_e
 
 #Computing Difference Grid for Error Analysis
 diffgrid_e = np.empty_like(dt_values)
@@ -104,8 +106,10 @@ plt.figure(2)
 plt.grid(True)
 plt.xlabel('$\Delta t$')
 plt.ylabel('$L_1$')
-plt.loglog(dt_values[:,-1],diffgrid_e[:,-1], color='k', ls='--',label='Euler')
-plt.loglog(dt_values[:,-1],diffgrid_mod_e[:,-1], color='r', ls='--',label='Modified Euler')
-plt.legend()
+plt.loglog(dt_values[:-1],diffgrid_e[:-1], color='k', ls='--',marker='o',label='Euler')
+plt.loglog(dt_values[:-1],diffgrid_mod_e[:-1], color='r', ls='--',marker='o',label='Modified Euler')
+plt.xlim(1e-4,1)
+plt.ylim(1e-4,10)
+plt.legend(loc='best')
 
 plt.show()
