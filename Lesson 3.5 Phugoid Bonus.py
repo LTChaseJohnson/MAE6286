@@ -24,7 +24,7 @@ def f(u):
                       v*np.cos(theta),
                       v*np.sin(theta)])
 
-def eulerstep(f,u,dt):
+def eulerstep(u,f,dt):
     return u + dt * f(u)
     
 def get_diffgrid(u_current,u_fine,dt):
@@ -34,7 +34,7 @@ def get_diffgrid(u_current,u_fine,dt):
     diffgrid = dt*np.sum(np.abs(u_current[:,2]-u_fine[::grid_size_ratio,2]))
     return diffgrid
     
-def modeulerstep(f,u,dt):
+def modeulerstep(u,f,dt):
     u_half = u + 0.5*dt*f(u)
     return u + dt*f(u_half)
 
@@ -54,11 +54,7 @@ u_modeuler[0] = np.array([v0,theta0,x0,y0])
 #Running the Loop!
 for n in range(N-1):
     u_euler[n+1] = eulerstep(u_euler[n],f,dt)
-    if u_euler[n+1]<0.0:
-        break
     u_modeuler[n+1] = modeulerstep(u_modeuler[n],f,dt)
-    if u_modeuler[n+1]<0.0:
-        break
 
 x_euler = u_euler[:,2]
 y_euler = u_euler[:,3]
@@ -66,3 +62,16 @@ y_euler = u_euler[:,3]
 x_modeuler = u_modeuler[:,2]
 y_modeuler = u_modeuler[:,3]
 
+crash_index = np.where(y_euler<=0)[0][0]
+
+#Let's see the plots!
+plt.figure(1)
+plt.grid(True)
+plt.xlabel('x $m$')
+plt.ylabel('Height $m$')
+plt.plot(x_euler,y_euler,'k-',label='Euler')
+plt.plot(x_modeuler,y_modeuler,'r--',label='Modified Euler')
+plt.xlim(x0,x_euler[crash_index]+1)
+plt.legend()
+plt.ylim(0,2.5)
+plt.show()
