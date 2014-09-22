@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
+from time import time
 
 #Model Parameters:
 g = 9.8             #Gravitational acceleration (m/s**2)
@@ -60,12 +61,24 @@ u_cd[0] = np.array([v0,theta0,x0,y0])
 u_cd[1] = modeulerstep(u_cd[0],f,dt)     #First iteration with modified Euler method
 
 #Running the Loop!
+start_time1=time()
 for n in range(N-1):
     u_euler[n+1] = eulerstep(u_euler[n],f,dt)
-    u_modeuler[n+1] = modeulerstep(u_modeuler[n],f,dt)
+end_time1=time()
 
+eulertime = end_time1-start_time1
+
+start_time2=time()
+for n in range(N-1):
+    u_modeuler[n+1] = modeulerstep(u_modeuler[n],f,dt)
+end_time2=time()
+modeulertime = end_time2-start_time2
+
+start_time3=time()
 for n in range(1,N-1):
     u_cd[n+1] = centereddiff(u_cd[n-1],u_cd[n],f,dt)
+end_time3=time()
+centerdifftime=end_time3-start_time3
 
 x_euler = u_euler[:,2]
 y_euler = u_euler[:,3]
@@ -77,6 +90,10 @@ x_cd = u_cd[:,2]
 y_cd = u_cd[:,3]
 
 crash_index = np.where(y_euler<=0)[0][0]
+
+print ('Euler Method time: '),eulertime
+print ('Modified Euler Method time: '),modeulertime
+print ('Center Difference Method time: '),centerdifftime
 
 #Let's see the plots!
 plt.figure(1)
