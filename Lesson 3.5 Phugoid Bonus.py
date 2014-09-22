@@ -72,7 +72,7 @@ plt.ylabel('Height $m$')
 plt.plot(x_euler,y_euler,'k-',label='Euler')
 plt.plot(x_modeuler,y_modeuler,'r--',label='Modified Euler')
 plt.xlim(x0,x_euler[crash_index]+1)
-plt.legend()
+plt.legend(loc='best')
 plt.ylim(0,2.5)
 
 #Calculating multiple solutions with different dt
