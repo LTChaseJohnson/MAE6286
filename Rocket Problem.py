@@ -15,7 +15,7 @@ h0 = 0.           #Initial height
 v0 = 0.           #Initial velocity
 
 T = 50.
-dt = 0.1
+dt = 0.00001
 N = int(T/dt)+1
 t = np.linspace(0.0,T,N)
 
