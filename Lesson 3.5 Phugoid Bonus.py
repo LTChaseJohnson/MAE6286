@@ -74,4 +74,38 @@ plt.plot(x_modeuler,y_modeuler,'r--',label='Modified Euler')
 plt.xlim(x0,x_euler[crash_index]+1)
 plt.legend()
 plt.ylim(0,2.5)
+
+#Calculating multiple solutions with different dt
+dt_values = np.array([0.1,0.05,0.01,0.005,0.001])
+eu_values = np.empty_like(dt_values, dtype=np.ndarray)
+mod_eu_values = np.empty_like(dt_values, dtype=np.ndarray)
+
+for i, dt in enumerate(dt_values):
+    N = int(T/dt)+1
+    t = np.linspace(0.0,T,N)
+    e = np.empty((N,4))
+    e[0] = [v0,theta0,x0,y0]
+    mod_e = np.empty((N,4))
+    mod_e[0] = [v0,theta0,x0,y0]
+
+for n in range(N-1):
+    e[n+1] = eulerstep(e[n],f,dt)
+    mod_e[n+1] = modeulerstep(mod_e[n],f,dt)
+
+
+#Computing Difference Grid for Error Analysis
+diffgrid_e = np.empty_like(dt_values)
+diffgrid_mod_e = np.empty_like(dt_values)
+for i, dt in enumerate(dt_values):
+    diffgrid_e[i] = get_diffgrid(eu_values[i],eu_values[-1],dt)
+    diffgrid_mod_e[i] = get_diffgrid(mod_eu_values[i],mod_eu_values[-1],dt)
+
+plt.figure(2)
+plt.grid(True)
+plt.xlabel('$\Delta t$')
+plt.ylabel('$L_1$')
+plt.loglog(dt_values[:,-1],diffgrid_e[:,-1], color='k', ls='--',label='Euler')
+plt.loglog(dt_values[:,-1],diffgrid_mod_e[:,-1], color='r', ls='--',label='Modified Euler')
+plt.legend()
+
 plt.show()
