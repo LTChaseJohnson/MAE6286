@@ -47,11 +47,10 @@ tcrash = np.where(h<=0)[0][2]
 maxv = max(v)
 maxh = max(h)
 
-print 'Fuel Remaining: ',mp[3.2]
 print 'Maximum Velocity: ',maxv
 print 'Height at max V: ',h[50]
-print 'Maximum Height: ',(maxh+1)
-print 'Max Height time: ',(tmaxh+1)
+print 'Maximum Height: ',(maxh)
+print 'Max Height time: ',(tmaxh)/10.
 print 'Time of Flight: ',tcrash+1./10.
 print 'Crash Velocity: ',v[tcrash]
 
