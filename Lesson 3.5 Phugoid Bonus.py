@@ -10,10 +10,10 @@ Cd = 1/5.0          #Drag coefficient
 Cl = 1.0            #Lift coefficient
 
 #Initial Conditions:
-v0 = 16.            #Initial velocity (m/s)
-theta0 = -1.       #Initial angle (radians)
+v0 = 6.5            #Initial velocity (m/s)
+theta0 = -0.1       #Initial angle (radians)
 x0 = 0.0            #Initial x position (m)
-y0 = 2.0            #Initial y position (m)
+y0 = input('Enter Height: ') #Initial y position (m)
 
 def f(u):
     v = u[0]
@@ -44,7 +44,7 @@ def centereddiff(unm1,u,f,dt):
     return unm1+2.0*dt*f(u)
     
 #Defining time step parameters
-T = 15.0
+T = 150.0
 dt = 0.01
 N = int(T/dt)+1
 
