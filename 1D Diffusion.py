@@ -1,7 +1,6 @@
 import numpy as np                  
 import matplotlib.pyplot as plt    
-from matplotlib import rcParams
-from JSAnimation.IPython_display import display_animation
+from JSAnimation import IPython_display
 from matplotlib import animation
 
 nx = 41
