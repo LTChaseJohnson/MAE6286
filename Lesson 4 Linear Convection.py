@@ -30,7 +30,7 @@ for n in range(1,nt):
     u[1:] = unv[1:]*(1-(dt/dx)*(unv[1:]-unv[0:-1]))
 
 plt.figure(2)
-plt.title('Variable Velocity')
+plt.title('Variable Velocity = %d'%nx)
 plt.plot(x,u0,label='Time Zero')
 plt.plot(x,u,label='Time One')
 plt.legend(loc='best')
