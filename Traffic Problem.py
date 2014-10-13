@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import *
 
-Vmax = 136. #km/hr
+Vmax = 80. #km/hr
 L = 11. #km
 rhomax = 250. #cars/km
 nx = 51
@@ -13,9 +13,9 @@ nt = int(tf1/dt) #How many dts are require to get to the time I'm interested in
 dx = L/(nx-1)
 
 x = np.linspace(0,L,nx)
-rho0 = np.ones(nx)*20
+rho0 = np.ones(nx)*10
 rho0[10:20] = 50
-rho = np.ones(nx)*20
+rho = np.ones(nx)*10
 rho[10:20] = 50
 
 for n in range(1,nt):
@@ -53,5 +53,5 @@ plt.plot(x,V0,label='Time Zero')
 plt.plot(x,V,label='Time Step')
 plt.ylabel(r'$V (\frac{m}{s})$',size=16)
 plt.xlabel(r'$x(km)$',size=16)
-plt.ylim(min(V0)-5,max(V0)+5)
+plt.ylim(min(V0)-0.5,max(V0)+0.5)
 plt.show()
