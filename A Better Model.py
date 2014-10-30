@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sympy
-sympy.init_printing()
 
 u_max,u_star,rho_max,rho_star,A,B = sympy.symbols('u_max u_* rho_max rho_* A B')
 
@@ -16,3 +15,9 @@ B_sol = sympy.solve(eq1,B)[0]
 
 quad_A = eq2.subs([(rho_star,rho_starsolve),(B,B_sol)])
 A_sol = sympy.solve(quad_A,A)
+
+A1 = A_sol[0].evalf(subs={u_star:0.7,u_max:1.0,rho_max:10.})
+A2 = A_sol[1].evalf(subs={u_star:0.7,u_max:1.0,rho_max:10.})
+B = B_sol.evalf(subs={A: A2,rho_max:10.})
+
+print A1, A2, B
