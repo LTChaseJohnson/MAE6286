@@ -20,10 +20,10 @@ A1 = A_sol[0].evalf(subs={u_star:1.5,u_max:2.0,rho_max:15.})
 A2 = A_sol[1].evalf(subs={u_star:1.5,u_max:2.0,rho_max:15.})
 B = B_sol.evalf(subs={A: A2,rho_max:15.})
 
-eq5 = sympy.Eq(0,u_max*(1-2*A*rho_min-3*B*rho_min**2))
+eq5 = sympy.Eq(0,u_max*(1-2*A2*rho_min-3*B*rho_min**2))
 rho_min_sol = sympy.solve(eq5,rho_min)
 
 print 'A1 = ',A1
 print 'A2 = ',A2
 print 'B = ',B
-print 'rho_min = ',rho_min_sol
+print 'rho_min = ',rho_min_sol[1]
