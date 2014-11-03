@@ -41,7 +41,8 @@ ust[:,:,0] = u[:,:]
 
 
 def f(u):
-    return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
+    f = np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
+    return f
 
 def Richtmyer(u,nt,dt,dx):
     un = np.empty_like(u)
