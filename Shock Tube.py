@@ -7,10 +7,10 @@ def f(u):
 
 T = 0.1        #Final Time
 dt = 0.0002
-N = int(T/dt)+1
-t = np.linspace(0.0, T, N)
+nt = int(T/dt)+1
+t = np.linspace(0.0, T, N)  #Unnecessary
 nx = 81
-x = np.linspace(-10,10,nx)
+x = np.linspace(-10,10,nx)  #Unnecessary
 dx = 0.25
 gamma = 1.4
 rhoL = 1
@@ -44,14 +44,13 @@ def f(u):
     f = np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
     return f
 
-def Richtmyer(u,nt,dt,dx):
+def Richtmyer(u,nx,nt,dt,dx):
     un = np.empty_like(u)
-    un[:,:] = u.copy()
     ustarplus = u.copy()
     ustarminus = u.copy()
-    for i in range(1,nt):
-        F=f(u)
-        ustarplus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[:,:-1]))
+    
+    for i in range(nt):
+        ustarplus[:,:,-1] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[:,:-1]))
         ustarminus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[i,:-1]))
         Fstarplus[i] = F(ustarplus[i])
         Fstarminus[i] = F(ustarminus[i])
