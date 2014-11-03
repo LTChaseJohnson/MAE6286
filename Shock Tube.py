@@ -29,12 +29,19 @@ u2R = PR/(gamma-1)
 
 #Creating Space-U
 uINIT = np.zeros((3,nx))
-uINIT[0,nx/2.:]=u0L
-uINIT[1,nx/2.:]=u1L
-uINIT[2,nx/2.:]=u2L
-uINIT[0,:nx/2.]=u0R
-uINIT[1,:nx/2.]=u1R
-uINIT[2,:nx/2.]=u2R
+uINIT[0,nx/2.:]=u0R
+uINIT[1,nx/2.:]=u1R
+uINIT[2,nx/2.:]=u2R
+uINIT[0,:nx/2.]=u0L
+uINIT[1,:nx/2.]=u1L
+uINIT[2,:nx/2.]=u2L
+
+plt.figure(1)
+plt.plot(x,uINIT[0],label='U1')
+plt.plot(x,uINIT[1],label='U2')
+plt.plot(x,uINIT[2],label='U3')
+plt.legend(loc='best')
+
 #Creating Space-Time-U Grid
 ust = np.empty((3,nx,nt))
 ust[:,:,0] = uINIT[:,:]
