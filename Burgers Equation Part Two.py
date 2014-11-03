@@ -6,17 +6,15 @@ def u_initial(nx,u_max,u_init):
     u[(nx-1)*2./4:] = u_init
     return u
 
-<<<<<<< HEAD
+
 nx = 81.
 u_max = 1.0
 u_init = 0.0
-=======
 nx = 81
 u_max = 1.0
 u_init = 0.0
 nt = 70
 dx = 4./(nx-1)
->>>>>>> origin/master
 
 u0 = u_initial(nx,u_max,u_init)
 x = np.linspace(0,4,nx)
@@ -28,9 +26,8 @@ plt.title('Initial Velocity')
 plt.ylabel(r'$\frac{m}{s}$', size=16)
 plt.xlabel(r'$m$', size=16)
 
-<<<<<<< HEAD
+
 plt.show()
-=======
 computeF = lambda u: (u/2)**2
 
 def Maccormack(u,nt,dx):
@@ -100,5 +97,3 @@ line, = ax.plot([],[],lw=2);
 
 anim = animation.FuncAnimation(fig, animate, frames = un, interval = 50)
 display_animation(anim,default_mode='reflect')
-
->>>>>>> origin/master
