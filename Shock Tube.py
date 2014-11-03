@@ -27,9 +27,18 @@ u0R = rhoR
 u1R = uR
 u2R = PR/(gamma-1)
 
-u = np.empty((N,3))
-u[0] = np.array([u0L,u1L,u2L])
-u[-1] = np.array([u0R,u1R,u2R])
+#Creating Space-U
+u = np.zeros((3,nx))
+u[0,0]=u0L
+u[1,0]=u1L
+u[2,0]=u2L
+u[0,-1]=u0R
+u[1,-1]=u1R
+u[2,-1]=u2R
+#Creating Space-Time-U
+ust = np.empty((3,nx,nt))
+ust[:,:,0] = u[:,:]
+
 
 def f(u):
     return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
