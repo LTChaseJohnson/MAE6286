@@ -38,7 +38,11 @@ uINIT[2,:nx/2.]=u2L
 
 plt.figure(1)
 plt.plot(x,uINIT[0],label='U1')
+plt.legend(loc='best')
+plt.figure(2)
 plt.plot(x,uINIT[1],label='U2')
+plt.legend(loc='best')
+plt.figure(3)
 plt.plot(x,uINIT[2],label='U3')
 plt.legend(loc='best')
 
