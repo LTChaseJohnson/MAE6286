@@ -5,12 +5,12 @@ def f(u):
     return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]),
     (u[2]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]))*u[1]/u[0]])
 
-T = 0.1        #Final Time
+T = 0.01        #Final Time
 dt = 0.0002
-nt = int(T/dt)+1
-t = np.linspace(0.0, T, nt)  #Unnecessary
+nt = int(T/dt)
+t = np.linspace(0.0, T, nt)  #Unnecessary (Only for plotting)
 nx = 81
-x = np.linspace(-10,10,nx)  #Unnecessary
+x = np.linspace(-10,10,nx)  #Unnecessary (Only for plotting)
 dx = 0.25
 gamma = 1.4
 rhoL = 1
@@ -46,14 +46,14 @@ def f(u):
 
 def Richtmyer(ust,nx,nt,dt,dx):
     un = ust[:,:,0]    
-    ustarplus = np.empty_like(un)
-    ustarminus = np.empty_like(un)
+    ustarplus = np.zeros((3,nx))
+    ustarminus = np.zeros((3,nx))
     
     for i in range(nt):
-        ustarplus[:,:-1] = 0.5*(un[:,1:]+un[:,:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,:-1]))
-        ustarminus[:,1:] = 0.5*(un[:,0:-1]+un[:,1:])-0.5*dt/dx*(f(un[:,0:-1])-f(un[:,1:]))
+        ustarplus[:,0:-1] = 0.5*(un[:,1:]+un[:,0:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,0:-1]))
+        ustarminus[:,1:] = 0.5*(un[:,1:]+un[:,0:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,0:-1]))
         un[:,1:-1] = un[:,1:-1]-dt/dx*(f(ustarplus[:,1:-1])-f(ustarminus[:,1:-1]))
-        
+              
         ust[:,:,i] = un[:,:]
         
     return ust
@@ -75,3 +75,5 @@ rho25 = U125
 print ('Velocity at 2.5m: '),u25
 print ('Pressure at 2.5m: '),P25
 print ('Density at 2.5m: '),rho25
+
+plt.show()
