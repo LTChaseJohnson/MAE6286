@@ -5,12 +5,12 @@ def f(u):
     return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]),
     (u[2]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]))*u[1]/u[0]])
 
-T = 0.1        #Final Time
+T = 0.01        #Final Time
 dt = 0.0002
-N = int(T/dt)+1
-t = np.linspace(0.0, T, N)
+nt = int(T/dt)
+t = np.linspace(0.0, T, nt)  #Unnecessary (Only for plotting)
 nx = 81
-x = np.linspace(-10,10,nx)
+x = np.linspace(-10,10,nx)  #Unnecessary (Only for plotting)
 dx = 0.25
 gamma = 1.4
 rhoL = 1
@@ -27,22 +27,60 @@ u0R = rhoR
 u1R = uR
 u2R = PR/(gamma-1)
 
-u = np.empty((N,3))
-u[0] = np.array([u0L,u1L,u2L])
-u[-1] = np.array([u0R,u1R,u2R])
+#Creating Space-U
+uINIT = np.zeros((3,nx))
+uINIT[0,nx/2.:]=u0R
+uINIT[1,nx/2.:]=u1R
+uINIT[2,nx/2.:]=u2R
+uINIT[0,:nx/2.]=u0L
+uINIT[1,:nx/2.]=u1L
+uINIT[2,:nx/2.]=u2L
+
+plt.figure(1)
+plt.plot(x,uINIT[0],label='U1')
+plt.plot(x,uINIT[1],label='U2')
+plt.plot(x,uINIT[2],label='U3')
+plt.legend(loc='best')
+
+#Creating Space-Time-U Grid
+ust = np.empty((3,nx,nt))
+ust[:,:,0] = uINIT[:,:]
+
 
 def f(u):
-    return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
+    f = np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]),(u[2]+(gamma-1)*(u[2]-.5*u[1]**2/u[0]))*u[1]/u[0]])
+    return f
 
-def Richtmyer(u,nt,dt,dx):
-    un = np.empty_like(u)
-    un[:,:] = u.copy()
-    ustarplus = u.copy()
-    ustarminus = u.copy()
-    for i in range(1,nt):
-        F=f(u)
-        ustarplus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[:,:-1]))
-        ustarminus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[i,:-1]))
-        Fstarplus[i] = F(ustarplus[i])
-        Fstarminus[i] = F(ustarminus[i])
-        un[i,
+def Richtmyer(ust,nx,nt,dt,dx):
+    un = ust[:,:,0]    
+    ustarplus = np.zeros((3,nx))
+    ustarminus = np.zeros((3,nx))
+    
+    for i in range(nt):
+        ustarplus[:,0:-1] = 0.5*(un[:,1:]+un[:,0:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,0:-1]))
+        ustarminus[:,1:] = 0.5*(un[:,1:]+un[:,0:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,0:-1]))
+        un[:,1:-1] = un[:,1:-1]-dt/dx*(f(ustarplus[:,1:-1])-f(ustarminus[:,1:-1]))
+              
+        ust[:,:,i] = un[:,:]
+        
+    return ust
+
+u = Richtmyer(ust,nx,nt,dt,dx)
+
+U125=u[0,50,-1]
+U225=u[1,50,-1]
+U325=u[2,50,-1]
+
+print ('U1 at 2.5m: '),U125
+print ('U2 at 2.5m: '),U225
+print ('U3 at 2.5m: '),U325
+
+u25 = U225/U125
+P25 = (gamma-1)*(U325-.5*U225**2/U125)
+rho25 = U125
+
+print ('Velocity at 2.5m: '),u25
+print ('Pressure at 2.5m: '),P25
+print ('Density at 2.5m: '),rho25
+
+plt.show()

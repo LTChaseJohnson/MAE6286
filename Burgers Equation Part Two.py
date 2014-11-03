@@ -96,4 +96,8 @@ ax = plt.axes(xlim=(0,4),ylim=(-.5,2))
 line, = ax.plot([],[],lw=2);
 
 anim = animation.FuncAnimation(fig, animate, frames = un, interval = 50)
+<<<<<<< HEAD
 display_animation(anim,default_mode='reflect')
+=======
+display_animation(anim,default_mode='reflect')
+>>>>>>> origin/master
