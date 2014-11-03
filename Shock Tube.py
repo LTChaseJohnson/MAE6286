@@ -43,3 +43,6 @@ def Richtmyer(u,nt,dt,dx):
         F=f(u)
         ustarplus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[:,:-1]))
         ustarminus[i] = 0.5*(u[i,0:]+u[i,:-1])-0.5*dt/dx*(f(u[i,0:])-f(u[i,:-1]))
+        Fstarplus[i] = F(ustarplus[i])
+        Fstarminus[i] = F(ustarminus[i])
+        un[i,
