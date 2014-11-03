@@ -45,13 +45,13 @@ def f(u):
     return f
 
 def Richtmyer(ust,nx,nt,dt,dx):
-    un = ust[:,:,0]    #This needs to remain the same dimensions as ust
-    ustarplus = un.copy()       #This is one less dimension and will roll through time adding values to ust
-    ustarminus = un.copy()
+    un = ust[:,:,0]    
+    ustarplus = np.empty_like(un)
+    ustarminus = np.empty_like(un)
     
-    for i in range(1,nt):
-        ustarplus[:,:-1] = 0.5*(un[:,0:-1]+un[:,:-1])-0.5*dt/dx*(f(un[:,0:-1])-f(un[:,:-1]))
-        ustarminus[:,0:-1] = 0.5*(un[:,0:-1]+un[:,:-1])-0.5*dt/dx*(f(un[:,0:-1])-f(un[:,:-1]))
+    for i in range(nt):
+        ustarplus[:,:-1] = 0.5*(un[:,1:]+un[:,:-1])-0.5*dt/dx*(f(un[:,1:])-f(un[:,:-1]))
+        ustarminus[:,1:] = 0.5*(un[:,0:-1]+un[:,1:])-0.5*dt/dx*(f(un[:,0:-1])-f(un[:,1:]))
         un[:,1:-1] = un[:,1:-1]-dt/dx*(f(ustarplus[:,1:-1])-f(ustarminus[:,1:-1]))
         
         ust[:,:,i] = un[:,:]
