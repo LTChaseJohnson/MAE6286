@@ -27,7 +27,7 @@ u0R = rhoR
 u1R = uR
 u2R = PR/(gamma-1)
 
-#Creating Space-U
+#Creating Space-U Test Change
 uINIT = np.zeros((3,nx))
 uINIT[0,nx/2.:]=u0R
 uINIT[1,nx/2.:]=u1R
