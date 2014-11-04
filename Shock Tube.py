@@ -5,12 +5,12 @@ def f(u):
     return np.array([u[1],u[1]**2/u[0]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]),
     (u[2]+(gamma-1)*(u[2]-0.5*u[1]**2/u[0]))*u[1]/u[0]])
 
-T = 0.01        #Final Time
+T = 0.01                      #Final Time
 dt = 0.0002
 nt = int(T/dt)
-t = np.linspace(0.0, T, nt)  #Unnecessary (Only for plotting)
+t = np.linspace(0.0, T, nt)   #Unnecessary (Only for plotting)
 nx = 81
-x = np.linspace(-10,10,nx)  #Unnecessary (Only for plotting)
+x = np.linspace(-10,10,nx)    #Unnecessary (Only for plotting)
 dx = 0.25
 gamma = 1.4
 rhoL = 1
