@@ -8,7 +8,7 @@ def u_initial(u_max,L):
     return u
 
 #Define Initial Parameters
-u_max = 10.
+u_max = 1.
 L = 100.
 nx = 100
 x = np.linspace(0,L,nx)
@@ -19,7 +19,7 @@ dt = 0.5*dx/c
 
 g = lambda x: -2+2*np.cos(2*np.pi/L*x)
 veli = g(x)
-yi = .5-.5*np.cos(2*np.pi/L*x)
+yi = u = np.piecewise(x, [x<L/2,x>=L/2],[lambda x: 2*u_max/L*x,lambda x: 2*u_max*(-x/L+1)])
 lam = c*dt/dx
 print lam**2
 
