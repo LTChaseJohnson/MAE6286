@@ -49,7 +49,6 @@ plt.legend()
 for i in range(nt):
     plt.figure(2)
     plt.plot(x,y[i,:])
-    plt.ylim(-70,70)
     plt.xlim(0,L)
     
 plt.show()
